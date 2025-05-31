@@ -21,15 +21,24 @@ MSG_DATA_TYPES = {
 
 
 def get_entity_validation_schema(entity: schema.SensorSchema) -> cv.Schema:
-    return sensor.sensor_schema(
-        unit_of_measurement=entity.unit_of_measurement
-        or sensor._UNDEF,  # pylint: disable=protected-access
-        accuracy_decimals=entity.accuracy_decimals,
-        device_class=entity.device_class
-        or sensor._UNDEF,  # pylint: disable=protected-access
-        icon=entity.icon or sensor._UNDEF,  # pylint: disable=protected-access
-        state_class=entity.state_class,
-    ).extend(
+    kwargs = {}
+
+    if entity.unit_of_measurement is not None:
+        kwargs["unit_of_measurement"] = entity.unit_of_measurement
+
+    if entity.accuracy_decimals is not None:
+        kwargs["accuracy_decimals"] = entity.accuracy_decimals
+
+    if entity.device_class is not None:
+        kwargs["device_class"] = entity.device_class
+
+    if entity.icon is not None:
+        kwargs["icon"] = entity.icon
+
+    if entity.state_class is not None:
+        kwargs["state_class"] = entity.state_class
+
+    return sensor.sensor_schema(**kwargs).extend(
         {
             cv.Optional(const.CONF_DATA_TYPE): cv.one_of(*MSG_DATA_TYPES),
         }
