@@ -35,7 +35,7 @@ async def new_openthermnumber(config: dict[str, Any]) -> cg.Pvariable:
 
 def get_entity_validation_schema(entity: schema.InputSchema) -> cv.Schema:
     return (
-        number.number_schema(Add commentMore actions
+        number.number_schema(
             OpenthermNumber, unit_of_measurement=entity.unit_of_measurement
         )
         .extend(
