@@ -23,11 +23,11 @@ MSG_DATA_TYPES = {
 def get_entity_validation_schema(entity: schema.SensorSchema) -> cv.Schema:
     return sensor.sensor_schema(
         unit_of_measurement=entity.unit_of_measurement
-        or sensor._UNDEF,  # pylint: disable=protected-access
+        or cv.UNDEFINED,
         accuracy_decimals=entity.accuracy_decimals,
         device_class=entity.device_class
-        or sensor._UNDEF,  # pylint: disable=protected-access
-        icon=entity.icon or sensor._UNDEF,  # pylint: disable=protected-access
+        or cv.UNDEFINED,
+        icon=entity.icon or cv.UNDEFINED,
         state_class=entity.state_class,
     ).extend(
         {
