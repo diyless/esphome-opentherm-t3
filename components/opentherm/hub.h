@@ -118,7 +118,13 @@ class OpenthermHub : public Component {
   void set_in_pin(InternalGPIOPin *in_pin) { this->in_pin_ = in_pin; }
   void set_out_pin(InternalGPIOPin *out_pin) { this->out_pin_ = out_pin; }
   void set_boot_pin(InternalGPIOPin *boot_pin) { this->boot_pin_ = boot_pin; }
-  void set_reset_pin(InternalGPIOPin *reset_pin) { this->reset_pin_ = reset_pin; }  
+  void set_reset_pin(InternalGPIOPin *reset_pin) { this->reset_pin_ = reset_pin; }
+
+  // DS18B20 temperature and ambient light value reported by the STM32 co-processor.
+  // NAN / 0 until the first GenericStatusResponse packet arrives.
+  float get_ext_temp() const { return this->opentherm_ ? this->opentherm_->get_ext_temp() : NAN; }
+  uint16_t get_light_value() const { return this->opentherm_ ? this->opentherm_->get_light_value() : 0; }
+  bool has_status() const { return this->opentherm_ && this->opentherm_->has_status(); }
 
   OPENTHERM_SENSOR_LIST(OPENTHERM_SET_SENSOR, )
 
