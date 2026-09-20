@@ -68,7 +68,9 @@ void OpenTherm::delayed_initialize() {
 
 void OpenTherm::onGenericStatusResponse(const GenericStatusResponse *resp) {
   ESP_LOGD(TAG, "onGenericStatusResponse: %.2f %d", resp->ExtTemp, resp->LightValue);
-  //  m_pExtSensor->setValues(resp->ExtTemp, resp->LightValue);
+  this->ext_temp_ = resp->ExtTemp;
+  this->light_value_ = resp->LightValue;
+  this->status_received_ = true;
 }
 
 void OpenTherm::onOtCommandResponse(const OtCommandResponse *resp) {

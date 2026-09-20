@@ -8,6 +8,7 @@
 #pragma once
 
 #include "atomic"
+#include <cmath>
 #include <string>
 #include "esphome/core/hal.h"
 #include "esphome/core/log.h"
@@ -308,6 +309,12 @@ public:
     return mode_;
   }
 
+  // Last values received from the STM32 co-processor via GenericStatusResponse.
+  // ext_temp is the DS18B20 wired to the STM32L0; NAN until the first packet arrives.
+  float get_ext_temp() const { return ext_temp_; }
+  uint16_t get_light_value() const { return light_value_; }
+  bool has_status() const { return status_received_; }
+
   void debug_data(OpenthermData &data);
 
   const char *protocol_error_to_str(ProtocolErrorType error_type);
@@ -327,6 +334,10 @@ private:
   HardwareSerial Serial1;
   ProtocolSerializer m_Serializer;
   uint8_t m_TxBuffer[ProtocolSerializer::BUFFER_SIZE];
+
+  float ext_temp_{NAN};
+  uint16_t light_value_{0};
+  bool status_received_{false};
 
   void onGenericStatusResponse(const GenericStatusResponse *resp);
   void onOtCommandResponse(const OtCommandResponse *resp);
