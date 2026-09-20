@@ -3,7 +3,13 @@ from typing import Any
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import number
-from esphome.const import CONF_INITIAL_VALUE, CONF_RESTORE_VALUE, CONF_STEP
+from esphome.const import (
+    CONF_INITIAL_VALUE,
+    CONF_MAX_VALUE,
+    CONF_MIN_VALUE,
+    CONF_RESTORE_VALUE,
+    CONF_STEP,
+)
 
 from .. import const, schema, validate, input, generate
 
@@ -18,16 +24,16 @@ OpenthermNumber = generate.opentherm_ns.class_(
 async def new_openthermnumber(config: dict[str, Any]) -> cg.Pvariable:
     var = await number.new_number(
         config,
-        min_value=config[input.CONF_min_value],
-        max_value=config[input.CONF_max_value],
-        step=config[input.CONF_step],
+        min_value=config[CONF_MIN_VALUE],
+        max_value=config[CONF_MAX_VALUE],
+        step=config[CONF_STEP],
     )
     await cg.register_component(var, config)
     input.generate_setters(var, config)
 
-    if (initial_value := config.get(CONF_INITIAL_VALUE, None)) is not None:
+    if (initial_value := config.get(CONF_INITIAL_VALUE)) is not None:
         cg.add(var.set_initial_value(initial_value))
-    if (restore_value := config.get(CONF_RESTORE_VALUE, None)) is not None:
+    if (restore_value := config.get(CONF_RESTORE_VALUE)) is not None:
         cg.add(var.set_restore_value(restore_value))
 
     return var

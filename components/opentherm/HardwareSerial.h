@@ -2,8 +2,7 @@
 
 #include "inttypes.h"
 
-namespace esphome {
-namespace opentherm {
+namespace esphome::opentherm {
 
 class HardwareSerial {
 private:
@@ -19,5 +18,4 @@ public:
   void send(uint8_t *data, int len);
 };
 
-}  // namespace opentherm
-}  // namespace esphome
+}  // namespace esphome::opentherm

@@ -7,8 +7,7 @@
 
 #define ECHO_UART_PORT_NUM (UART_NUM_1)
 
-namespace esphome {
-namespace opentherm {
+namespace esphome::opentherm {
 
 void HardwareSerial::begin(uint32_t baudRate, uint32_t tx, uint32_t rx) {
   uart_config_t uart_config = {
@@ -26,10 +25,12 @@ void HardwareSerial::begin(uint32_t baudRate, uint32_t tx, uint32_t rx) {
 #if CONFIG_UART_ISR_IN_IRAM
   intr_alloc_flags = ESP_INTR_FLAG_IRAM;
 #endif
+
   //workaround due to https://github.com/espressif/esp-idf/issues/17459
   ESP_ERROR_CHECK(gpio_reset_pin((gpio_num_t )rx));
   ESP_ERROR_CHECK(gpio_reset_pin((gpio_num_t )tx));
   // to be removed after upstream is corrected
+
   ESP_ERROR_CHECK(uart_driver_install(ECHO_UART_PORT_NUM, BUF_SIZE * 2, 0, 0, NULL, intr_alloc_flags));
   ESP_ERROR_CHECK(uart_param_config(ECHO_UART_PORT_NUM, &uart_config));
   ESP_ERROR_CHECK(uart_set_pin(ECHO_UART_PORT_NUM, rx, tx, -1, -1));
@@ -52,5 +53,4 @@ bool HardwareSerial::available() {
   return size > 0;
 }
 
-}  // namespace opentherm
-}  // namespace esphome
+}  // namespace esphome::opentherm

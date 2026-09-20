@@ -5,8 +5,7 @@
 #include "lambdatraits.h"
 #include <map>
 
-namespace esphome {
-namespace opentherm {
+namespace esphome::opentherm {
 
 struct CpuStatusRequest;
 struct CpuStatusResponse;
@@ -150,5 +149,4 @@ struct LogRequest {
   uint8_t Length;
 } __attribute__((packed));
 
-}  // namespace opentherm
-}  // namespace esphome
+}  // namespace esphome::opentherm

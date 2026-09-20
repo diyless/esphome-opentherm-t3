@@ -16,8 +16,7 @@
 #include "HardwareSerial.h"
 #include "Stm32AppProtocol.h"
 
-namespace esphome {
-namespace opentherm {
+namespace esphome::opentherm {
 
 template<class T> constexpr T read_bit(T value, uint8_t bit) { return (value >> bit) & 0x01; }
 
@@ -164,7 +163,7 @@ enum BitPositions { STOP_BIT = 33 };
 
 /**
  * Structure to hold Opentherm data packet content.
- * Use f88(), u16() or s16() functions to get appropriate value of data packet accoridng to id of message.
+ * Use get_f88(), get_u16() or get_s16() functions to get appropriate value of data packet according to id of message.
  */
 struct OpenthermData {
   uint8_t type;
@@ -177,32 +176,32 @@ struct OpenthermData {
   /**
    * @return float representation of data packet value
    */
-  float f88();
+  float get_f88();
 
   /**
    * @param float number to set as value of this data packet
    */
-  void f88(float value);
+  void set_f88(float value);
 
   /**
    * @return unsigned 16b integer representation of data packet value
    */
-  uint16_t u16();
+  uint16_t get_u16();
 
   /**
    * @param unsigned 16b integer number to set as value of this data packet
    */
-  void u16(uint16_t value);
+  void set_u16(uint16_t value);
 
   /**
    * @return signed 16b integer representation of data packet value
    */
-  int16_t s16();
+  int16_t get_s16();
 
   /**
    * @param signed 16b integer number to set as value of this data packet
    */
-  void s16(int16_t value);
+  void set_s16(int16_t value);
 };
 
 struct OpenThermError {
@@ -339,5 +338,4 @@ private:
   void write_bit_(uint8_t high, uint8_t clock);
 };
 
-}  // namespace opentherm
-}  // namespace esphome
+}  // namespace esphome::opentherm

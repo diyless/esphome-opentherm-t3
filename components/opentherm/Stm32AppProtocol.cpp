@@ -2,8 +2,7 @@
 
 #include "Stm32AppProtocol.h"
 
-namespace esphome {
-namespace opentherm {
+namespace esphome::opentherm {
 
 ProtocolSerializer::ProtocolSerializer() {
   resetToWaitingStartCondition();
@@ -105,5 +104,4 @@ void ProtocolSerializer::resetToWaitingStartCondition() {
   memset(m_Data, 0, BUFFER_SIZE);
 }
 
-}  // namespace opentherm
-}  // namespace esphome
+}  // namespace esphome::opentherm
